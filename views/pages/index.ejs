@@ -20,7 +20,8 @@
     <h2>Variable</h2>
     <p><%= taglines %></p>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="example">
+        <thead>
         <tr>
             <th>ID</th>
             <th>Username</th>
@@ -28,6 +29,8 @@
             <th>Done</th>
             <th>Attachement</th>
         </tr>
+        </thead>
+        <tbody>
         <% result.forEach(function(result) { %>
             <tr>
                 <td><%= result._id %></td>
@@ -37,6 +40,7 @@
                 <td><%= result.hasAttachment %></td>
             </tr>
             <% }); %>
+        </tbody>
     </table>
     <h3>Get From DB</h3>
     <form action="/api/todos/" method="GET">
@@ -64,6 +68,10 @@
 <footer>
     <%- include ('../partials/footer') %>
 </footer>
-
+<script>
+    $(document).ready(function() {
+ $('#example').DataTable();
+ } );
+</script>
 </body>
 </html>
