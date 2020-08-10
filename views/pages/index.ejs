@@ -1,0 +1,69 @@
+
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ('../partials/head') %>
+</head>
+<body class="container">
+
+<header>
+    <%- include ('../partials/header') %>
+</header>
+
+<main>
+    <div class="jumbotron">
+        <h1>This is great</h1>
+        <p>Welcome to templating using EJS</p>
+    </div>
+    <h2>Variable</h2>
+    <p><%= taglines %></p>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Todo</th>
+            <th>Done</th>
+            <th>Attachement</th>
+        </tr>
+        <% result.forEach(function(result) { %>
+            <tr>
+                <td><%= result._id %></td>
+                <td><%= result.username %></td>
+                <td><%= result.todo %></td>
+                <td><%= result.isDone %></td>
+                <td><%= result.hasAttachment %></td>
+            </tr>
+            <% }); %>
+    </table>
+    <h3>Get From DB</h3>
+    <form action="/api/todos/" method="GET">
+     <input type="text" name="uname" id="uname" placeholder="Username"/>
+     <button type="submit">submit</button>
+    </form>
+
+    <h3>Update Todo</h3>
+    <form action="/updat" method="POST">
+        <input type="text" name="uname" id="uuname" placeholder="Username"/>
+        <input type="text" name="todo" id="todo" placeholder="Todo"/>
+        <button type="submit">submit</button>
+        
+    </form>
+    <h3>Inset Doto</h3>
+    <form action="/insert" method="POST">
+        <input type="text" name="username" id="username" placeholder="Username"/>
+        <input type="text" name="todo"  placeholder="Todo"/>
+        <input type="text" name="isDone" placeholder="Is Done"/>
+        <input type="text" name="hasAttachment" placeholder="Attacement"/>
+        <button type="submit">submit</button>
+    </form>
+</main>
+
+<footer>
+    <%- include ('../partials/footer') %>
+</footer>
+
+</body>
+</html>
