@@ -31,18 +31,18 @@ module.exports = function(app) {
     
 
     app.get('/', (req, res) => {
-        
+   
         MongoClient.connect(url, function(err, db) {
             tagline = "test";
             if (err) throw err;
             var dbo = db.db("nodetodosample");
             dbo.collection("customers").find({}).toArray(function(err, result) {
               if (err) throw err;
-              console.log(result);
               db.close();
               res.render('./../views/pages/index', {
                 result: result,
-                taglines: tagline
+                taglines: tagline,
+                title: "Home"
             });
             });
           }); 
