@@ -5,21 +5,22 @@ var url = config.getDbConnectionString();
 
 module.exports = function(app) {
     
-   app.get('/api/setupTodos', function(req, res) {
+   app.get('/api/setup', function(req, res) {
        
        // seed database
        var myobj = {
-               username: "ahmad",
-               todo: "Feed dog",
-               isDone: false,
-               hasAttachment: false
+               id: 1,
+               count: 0,
+               earning: 0.0,
+               expense: 0.0,
+               date: "2-9-2020"
        };
           
       
        MongoClient.connect(url, function(err, db) {
         if (err) throw err;
-        var dbo = db.db("nodetodosample");
-        dbo.collection("customers").insertOne(myobj, function(err, res) {
+        var dbo = db.db("DMS");
+        dbo.collection("dailyerningexpense").insertOne(myobj, function(err, res) {
             if (err) throw err;
             console.log("Number of documents inserted: " + res.insertedCount);
             

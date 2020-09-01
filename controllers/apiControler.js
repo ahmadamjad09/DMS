@@ -31,9 +31,10 @@ module.exports = function(app) {
     
 
     app.get('/', (req, res) => {
-   
+     
+        var date_now = getCuttent_Date();
         MongoClient.connect(url, function(err, db) {
-            tagline = "test";
+            tagline = "test"; 
             if (err) throw err;
             var dbo = db.db("nodetodosample");
             dbo.collection("customers").find({}).toArray(function(err, result) {
@@ -42,7 +43,8 @@ module.exports = function(app) {
               res.render('./../views/pages/index', {
                 result: result,
                 taglines: tagline,
-                title: "Home"
+                title: "Home",
+                date: date_now
             });
             });
           }); 
@@ -50,8 +52,39 @@ module.exports = function(app) {
        
     });
 
-    app.get('/about', (req,res) => {
-        res.render('./../views/pages/about');
+    app.get('/earning', (req,res) => {
+      var date_now = getCuttent_Date();
+     
+      
+      MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("DMS");
+        dbo.collection("dailyerningexpense").find({}, { projection: { _id: 0, id: 0, count: 0, earning:0, expense:0 } }).toArray(function(err, result) {
+          if (err) throw err;
+         // console.log(result[0].date);
+          //console.log(date_previous);
+         
+          if ( result[0].date < date_now)
+          {
+            var myquery = { id: 1 };
+            var newvalues = { $set: {count: 0, date: date_now } };
+            dbo.collection("dailyerningexpense").updateOne(myquery, newvalues, function(err, res) {
+              if (err) throw err;
+              console.log("1 document updated");
+              db.close();
+              
+            }); 
+            console.log("Day Change");
+          }
+          else {
+            console.log("Same Day");
+          }
+        });
+      });
+        res.render('./../views/pages/earningExpense', {
+          title: "DMS-Earning",
+          date: date_now
+        });
 
     });
 
@@ -99,4 +132,11 @@ module.exports = function(app) {
    });
     });
     
+}
+function getCuttent_Date()
+{
+  var current_date = new Date();
+  var date_now = "";
+  date_now = current_date.getFullYear() + '-' + (current_date.getMonth()+1) + '-' + current_date.getDate();
+ return date_now
 }
