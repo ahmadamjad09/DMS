@@ -18,12 +18,12 @@
     <div class="row">
         <div class="col-sm-3 bg-primary card">
             <h3>Earning</h3>
-            <p>Rs. 5000</p>
+            <p>Rs. <%= earning %></p>
         </div>
         <div class="col-sm-1"></div>
         <div class="col-sm-3 bg-primary card " >
             <h3>Patients</h3>
-            <p>100</p>
+            <p><%= count %></p>
         </div>
         <div class="col-sm-1"></div>
         <div class="col-sm-3 bg-primary card " >
@@ -34,7 +34,7 @@
     <div class="row" style="margin-top: 30px;">
         <div class="col-sm-6">
             <h3>Earning</h3>
-            <form name="earning-form" method="POST" action="">
+            <form name="earning-form" method="POST" action="/earningSave">
             <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Amount:<font color="red">*</font></label>
                     <div class="col-sm-10">

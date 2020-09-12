@@ -54,17 +54,23 @@ module.exports = function(app) {
 
     app.get('/earning', (req,res) => {
       var date_now = getCuttent_Date();
+      var count = 0;
+      var earning = 0;
      
       
       MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("DMS");
-        dbo.collection("dailyerningexpense").find({}, { projection: { _id: 0, id: 0, count: 0, earning:0, expense:0 } }).toArray(function(err, result) {
+        dbo.collection("dailyerningexpense").find({}, { projection: { _id: 0, id: 0, expense:0 } }).toArray(function(err, result) {
           if (err) throw err;
-         // console.log(result[0].date);
-          //console.log(date_previous);
+          console.log(result[0]);
+          count = result[0].count;
+          earning = result[0].earning;
+          console.log(result[0].date);
          
-          if ( result[0].date < date_now)
+          //console.log(date_previous);localeCompare
+         
+          if ( date_now.localeCompare(result[0].date))
           {
             var myquery = { id: 1 };
             var newvalues = { $set: {count: 0, date: date_now } };
@@ -72,22 +78,28 @@ module.exports = function(app) {
               if (err) throw err;
               console.log("1 document updated");
               db.close();
+              count = 0;
+              
               
             }); 
             console.log("Day Change");
           }
-          else {
-            console.log("Same Day");
-          }
+          //else {
+            //console.log("Same Day");
+             res.render('./../views/pages/earningExpense', {
+          title: "DMS-Earning",
+          date: date_now,
+          count: count,
+          earning: earning
+        });
+          //}
         });
       });
-        res.render('./../views/pages/earningExpense', {
-          title: "DMS-Earning",
-          date: date_now
-        });
+       
 
     });
 
+    
     app.post('/updat', (req,res) =>
     {
         console.log(req.body);
@@ -132,7 +144,8 @@ module.exports = function(app) {
    });
     });
     
-}
+  }
+
 function getCuttent_Date()
 {
   var current_date = new Date();
