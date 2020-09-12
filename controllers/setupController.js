@@ -10,9 +10,8 @@ module.exports = function(app) {
        // seed database
        var myobj = {
                id: 1,
-               count: 0,
-               earning: 0.0,
-               expense: 0.0,
+               earning: 6000,
+               expense: 2000,
                date: "2-9-2020"
        };
           
@@ -20,7 +19,7 @@ module.exports = function(app) {
        MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("DMS");
-        dbo.collection("dailyerningexpense").insertOne(myobj, function(err, res) {
+        dbo.collection("dailystats").insertOne(myobj, function(err, res) {
             if (err) throw err;
             console.log("Number of documents inserted: " + res.insertedCount);
             

@@ -50,21 +50,15 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <% for(var i=0; i < result.length; i++) { %>
                     <tr>
-                        <td>1</td>
-                        <td>8000</td>
-                        <th>3000</th>
+                        <td><%= result[i].date %></td>
+                        <td><%= result[i].earning %></td>
+                        <td><%= result[i].expense %></td>
                     </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>8000</td>
-                        <th>3000</th>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>8000</td>
-                        <th>3000</th>
-                    </tr>
+                    <% } %>
+                   
+                  
                 </tbody>
             </table>
         </div>
